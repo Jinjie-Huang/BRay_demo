@@ -85,6 +85,7 @@ timing data, thread/depth information, and module mapping.
 Example:
 
 ```text
+[BRay] aggregated call tree (total inclusive / self, average inclusive, calls):
 [BRay] main 24.723 ms / 0.025 ms, avg 24.723 ms, calls=1
 [BRay]   bray_demo::handle_request(int) 24.697 ms / 3.143 ms, avg 8.232 ms, calls=3
 [BRay]     bray_demo::run_pipeline(int) 21.554 ms / 0.012 ms, avg 7.185 ms, calls=3
