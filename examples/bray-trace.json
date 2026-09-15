@@ -1,0 +1,131 @@
+{
+  "displayTimeUnit": "ms",
+  "traceEvents": [
+    {
+      "name": "process_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 0,
+      "args": {
+        "name": "BRay aggregated call tree"
+      }
+    },
+    {
+      "name": "thread_name",
+      "ph": "M",
+      "pid": 1,
+      "tid": 0,
+      "args": {
+        "name": "aggregated calls"
+      }
+    },
+    {
+      "name": "main",
+      "cat": "BRay",
+      "ph": "X",
+      "pid": 1,
+      "tid": 0,
+      "ts": 0,
+      "dur": 24722,
+      "args": {
+        "calls": 1,
+        "total_inclusive_us": 24722,
+        "total_exclusive_us": 25,
+        "average_inclusive_us": 24722,
+        "function_pc": "0x200340",
+        "module": "bray-demo.bray",
+        "module_offset": "0x200340"
+      }
+    },
+    {
+      "name": "bray_demo::handle_request(int)",
+      "cat": "BRay",
+      "ph": "X",
+      "pid": 1,
+      "tid": 0,
+      "ts": 0,
+      "dur": 24697,
+      "args": {
+        "calls": 3,
+        "total_inclusive_us": 24697,
+        "total_exclusive_us": 3165,
+        "average_inclusive_us": 8232,
+        "function_pc": "0x20076a",
+        "module": "libworkload.bray.so",
+        "module_offset": "0x20076a"
+      }
+    },
+    {
+      "name": "bray_demo::run_pipeline(int)",
+      "cat": "BRay",
+      "ph": "X",
+      "pid": 1,
+      "tid": 0,
+      "ts": 0,
+      "dur": 21532,
+      "args": {
+        "calls": 3,
+        "total_inclusive_us": 21532,
+        "total_exclusive_us": 10,
+        "average_inclusive_us": 7177,
+        "function_pc": "0x20067e",
+        "module": "libworkload.bray.so",
+        "module_offset": "0x20067e"
+      }
+    },
+    {
+      "name": "bray_demo::parse_request(int)",
+      "cat": "BRay",
+      "ph": "X",
+      "pid": 1,
+      "tid": 0,
+      "ts": 0,
+      "dur": 6166,
+      "args": {
+        "calls": 3,
+        "total_inclusive_us": 6166,
+        "total_exclusive_us": 6166,
+        "average_inclusive_us": 2055,
+        "function_pc": "0x200300",
+        "module": "libworkload.bray.so",
+        "module_offset": "0x200300"
+      }
+    },
+    {
+      "name": "bray_demo::compute_score(int)",
+      "cat": "BRay",
+      "ph": "X",
+      "pid": 1,
+      "tid": 0,
+      "ts": 6166,
+      "dur": 12213,
+      "args": {
+        "calls": 3,
+        "total_inclusive_us": 12213,
+        "total_exclusive_us": 12213,
+        "average_inclusive_us": 4071,
+        "function_pc": "0x200412",
+        "module": "libworkload.bray.so",
+        "module_offset": "0x200412"
+      }
+    },
+    {
+      "name": "bray_demo::persist_result(int)",
+      "cat": "BRay",
+      "ph": "X",
+      "pid": 1,
+      "tid": 0,
+      "ts": 18380,
+      "dur": 3141,
+      "args": {
+        "calls": 3,
+        "total_inclusive_us": 3141,
+        "total_exclusive_us": 3141,
+        "average_inclusive_us": 1047,
+        "function_pc": "0x200570",
+        "module": "libworkload.bray.so",
+        "module_offset": "0x200570"
+      }
+    }
+  ]
+}

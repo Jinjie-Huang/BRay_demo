@@ -74,6 +74,10 @@ in `chrome://tracing` or <https://ui.perfetto.dev>). Chrome Trace and the termin
 both show one flame-graph-style node per call path, including total inclusive
 time, self time, average time, and call count.
 
+A sample output is available at
+[`examples/bray-trace.json`](examples/bray-trace.json) and can be loaded
+directly into the trace viewer.
+
 Example:
 
 ```text
@@ -102,3 +106,4 @@ describe the aggregated node.
 - `runtime/symbolize_trace.py`: processes `bray-trace.raw.json`, performs
   batched offline symbolization and call-path aggregation, and writes the
   terminal call tree and Chrome Trace JSON.
+- `examples/bray-trace.json`: sanitized, ready-to-load Chrome Trace output.
