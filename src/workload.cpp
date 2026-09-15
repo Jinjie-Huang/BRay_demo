@@ -28,7 +28,8 @@ __attribute__((noinline)) int run_pipeline(int request) {
   return persist_result(score);
 }
 
-__attribute__((noinline)) int handle_request(int request) {
+__attribute__((noinline, visibility("default"))) int
+handle_request(int request) {
   std::this_thread::sleep_for(std::chrono::milliseconds(1));
   return run_pipeline(request);
 }
