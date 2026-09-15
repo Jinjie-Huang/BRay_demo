@@ -69,16 +69,23 @@ Hook path.
 
 `runtime/symbolize_trace.py` reads the raw JSON, resolves each unique PC once
 with `llvm-symbolizer`, aggregates repeated invocations by call path, prints
-the terminal call tree, and writes `build/bray-trace.json`(which can be loaded
-in `chrome://tracing` or <https://ui.perfetto.dev>). Chrome Trace and the terminal
-both show one flame-graph-style node per call path, including total inclusive
-time, self time, average time, and call count.
+the terminal call tree, and writes `build/bray-trace.json`, which can be loaded
+in `chrome://tracing` or <https://ui.perfetto.dev>. Chrome Trace and the
+terminal both show one flame-graph-style node per call path, including total
+inclusive time, self time, average time, and call count.
 
 A sample output is available at
 [`examples/bray-trace.json`](examples/bray-trace.json) and can be loaded
 directly into the trace viewer.
 
-Example:
+### Perfetto Preview
+
+The following screenshot shows the sample JSON loaded in
+[Perfetto](https://ui.perfetto.dev):
+
+> [![BRay aggregated call tree in Perfetto](examples/bray-trace.png)](examples/bray-trace.png)
+
+Terminal Output Example:
 
 ```text
 [BRay] aggregated call tree (total inclusive / self, average inclusive, calls):
@@ -90,14 +97,10 @@ Example:
 [BRay]       bray_demo::persist_result(int) 3.159 ms / 3.159 ms, avg 1.053 ms, calls=3
 ```
 
-Each Chrome Trace event uses phase `X`; `dur` is total inclusive time, while
-`args.total_exclusive_us`, `args.average_inclusive_us`, and `args.calls`
-describe the aggregated node.
-
 ## Files
 
-- `bootstrap.sh`: initializes and builds the LLVM/BOLT toolchain.
 - `run.sh`: builds, instruments, and runs the demo.
+- `bootstrap.sh`: initializes and builds the LLVM/BOLT toolchain.
 - `src/main.cpp`: executable entry point.
 - `src/workload.cpp`: nested workload compiled as `libworkload.so`.
 - `runtime/bray_trace.cpp`: reference Hook implementation for tracing function
@@ -106,4 +109,3 @@ describe the aggregated node.
 - `runtime/symbolize_trace.py`: processes `bray-trace.raw.json`, performs
   batched offline symbolization and call-path aggregation, and writes the
   terminal call tree and Chrome Trace JSON.
-- `examples/bray-trace.json`: sanitized, ready-to-load Chrome Trace output.
