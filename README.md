@@ -56,31 +56,23 @@ extern "C" void __bolt_probe_enter(uint64_t function_pc);
 extern "C" void __bolt_probe_exit(uint64_t function_pc);
 ```
 
+`runtime/bray_trace.cpp` is one reference implementation of these Hooks. It
+uses `__bolt_probe_enter` and `__bolt_probe_exit` to reconstruct function call
+relationships and measure inclusive and self time for each call path. At
+process exit, it writes every dynamic invocation and its module mapping to
+`build/bray-trace.raw.json`.
+
 Each thread maintains a stack of active calls. Entry pushes only the function
 PC and timestamp; exit pops the frame, computes inclusive time, and subtracts
 child time to get exclusive time. No symbol lookup or demangling runs in the
 Hook path.
 
-At process exit the Hook library writes raw PC events plus module mappings.
-`run.sh` groups unique PCs by module, resolves each one once with
-`llvm-symbolizer`, and then writes the final Chrome Trace.
-
-The demo intentionally does not link with `--export-dynamic` or `-rdynamic`.
-Internal workload functions are hidden from the dynamic symbol table and are
-still resolved from the BOLT output's regular symbol table.
-
-The script writes:
-
-```text
-build/bray-trace.json
-```
-
-Load it in `chrome://tracing` or <https://ui.perfetto.dev>. Chrome Trace and
-the terminal both fold repeated invocations with the same call path into one
-flame-graph-style node. Each node contains total inclusive time, self time,
-average time, and call count. The intermediate
-`build/bray-trace.raw.json` preserves every dynamic invocation with its PC,
-timing data, thread/depth information, and module mapping.
+`runtime/symbolize_trace.py` reads the raw JSON, resolves each unique PC once
+with `llvm-symbolizer`, aggregates repeated invocations by call path, prints
+the terminal call tree, and writes `build/bray-trace.json`(which can be loaded
+in `chrome://tracing` or <https://ui.perfetto.dev>). Chrome Trace and the terminal
+both show one flame-graph-style node per call path, including total inclusive
+time, self time, average time, and call count.
 
 Example:
 
@@ -104,6 +96,9 @@ describe the aggregated node.
 - `run.sh`: builds, instruments, and runs the demo.
 - `src/main.cpp`: executable entry point.
 - `src/workload.cpp`: nested workload compiled as `libworkload.so`.
-- `runtime/bray_trace.cpp`: preloadable BRay Hook library and raw event writer.
-- `runtime/symbolize_trace.py`: batched offline symbolization and Chrome Trace
-  writer.
+- `runtime/bray_trace.cpp`: reference Hook implementation for tracing function
+  calls and timing through `__bolt_probe_enter` and `__bolt_probe_exit`; writes
+  the intermediate `bray-trace.raw.json`.
+- `runtime/symbolize_trace.py`: processes `bray-trace.raw.json`, performs
+  batched offline symbolization and call-path aggregation, and writes the
+  terminal call tree and Chrome Trace JSON.
