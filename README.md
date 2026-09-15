@@ -21,14 +21,9 @@ llvm-build/
 `bootstrap.sh` shallow-clones
 `https://github.com/Jinjie-Huang/llvm-project.git` branch `bolt_BRay`, or
 fetches that branch's latest commit when the checkout already exists. It
-rebuilds BOLT when the source revision changes. It also checks the environment
-for unversioned and versioned tools such as `clang-17` and
-`llvm-symbolizer-17`; existing tools are reused, while missing Clang, LLD, or
-symbolizer tools are built alongside BOLT. The default build uses at most 16
-compile jobs and two link jobs; override it with `BRAY_JOBS=<n>`.
-
-Tool paths can be overridden with `BRAY_CLANG`, `BRAY_CLANGXX`, `BRAY_LLD`,
-and `BRAY_SYMBOLIZER`.
+rebuilds BOLT when the source revision changes. The script automatically
+looks for existing tools like `clang` and `llvm-symbolizer` in your environment
+to use directly; if missing, it builds them alongside BOLT.
 
 To reuse an existing build:
 
