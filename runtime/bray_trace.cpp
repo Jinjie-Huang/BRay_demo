@@ -269,6 +269,7 @@ static void finalizeTrace() {
 }
 
 __attribute__((constructor)) static void registerTraceFinalizer() {
+  HookGuard Guard;
   (void)trace();
   std::atexit(finalizeTrace);
 }
